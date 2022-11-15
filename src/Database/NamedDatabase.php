@@ -1,11 +1,10 @@
 <?php
 
-namespace Manikienko\Todo;
+namespace Manikienko\Todo\Database;
 
 use Lazer\Classes\Database;
 use Lazer\Classes\Helpers\Config;
 use Lazer\Classes\Helpers\Data;
-use Lazer\Classes\Helpers\Validate;
 
 /*
  * объект абстрактного класса нельзя создать, но в этом классе можно обьявить абстрактные методы которые

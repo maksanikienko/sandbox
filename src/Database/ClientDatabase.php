@@ -1,6 +1,6 @@
 <?php
 
-namespace Manikienko\Todo;
+namespace Manikienko\Todo\Database;
 
 class ClientDatabase extends NamedDatabase
 {

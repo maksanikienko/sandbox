@@ -2,14 +2,14 @@
 
 namespace Manikienko\Todo\Commands;
 
+use Lazer\Classes\Database as Lazer;
 use Lazer\Classes\Helpers\Config;
 use Lazer\Classes\Helpers\Data;
-use Manikienko\Todo\ClientDatabase;
+use Manikienko\Todo\Database\ClientDatabase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Lazer\Classes\Database as Lazer;
 
 /* надо переименовать в CreateCommand*/
 class TestCommand extends Command
