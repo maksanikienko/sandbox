@@ -17,37 +17,31 @@ class TestCommand extends Command
     public function configure()
     {
         parent::configure();
-        $this->setName('test:command');
-    }
+        $this->setName('create');
 
+    }
+    
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
-//        $io->ask("Please provide item name:");
-        //$io->choice('Choose workout type:', ['heavy', 'full-body', 'jogging']);
-        //$io->comment(...);
-        //$io->error('Error');
-        //$io->info('...');
-//        $io->success('Your command works.');
-
+        $this->io->text('Create new user');
 
         if (!$this->tableExists('users')) {
             $this->createUsersTable();
         }
 
-        # это пример добавления ряда в БД, но я его не советую, потому что он не атомарный и легко отхватить с ним проблем
-        // $row = Lazer::table('users');
-
-        // $row->id = '10';
-        // $row->nickname = 'new_user2';
-        // $row->save();
-
-        # лучше подойдёт этот вариант
+        
         $this->createNewUser([
             'name' => $this->io->ask("User name:"),
             'age' => (int) $this->io->ask("User age:"),
             'status' => $this->io->choice("User status:", ['active', 'inactive']),
         ]);
+        //$this->io->horizontalTable(
+           // ['Name','Age','Status'],
+           // [
+           //     ['name' => $this->io->ask("User name:"),'age' => (int) $this->io->ask("User age:"),'status' => $this->io->choice("User status:", ['active', 'inactive'])],
+           // ]
+        //);
 
         // тут мы просим подгрузить данные в память для того, чтобы потом их итерировать.
         // Обычно вызывая подобные методы мы получаем набор сущностей, коллекцию, но не тут.
