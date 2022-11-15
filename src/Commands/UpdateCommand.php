@@ -5,6 +5,7 @@ namespace Manikienko\Todo\Commands;
 use Lazer\Classes\Helpers\Config;
 use Lazer\Classes\Helpers\Data;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -18,26 +19,33 @@ class UpdateCommand extends Command
     {
         parent::configure();
         $this->setName('update');
-        $this->addArgument('id'); 
+
+        $this->addArgument('id', InputArgument::REQUIRED);
     }
 
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
-        $this->io->text('Update user by id');
-        $input->getArgument('id');
+        $this->io->text('Update user by ID');
+
+        $id = (int) $input->getArgument('id');
+
+        $client = Lazer::table('users')->find($id);
 
 
         if (!$this->tableExists('users')) {
             $this->createUsersTable();
         }
 
-        $this->updateNewUser([
+        $updatedFields = [
             'name' => $this->io->ask("User new name:"),
-            'age' => (int) $this->io->ask("User new age:"),
+            'age' => (int)$this->io->ask("User new age:"),
             'status' => $this->io->choice("User new status:", ['active', 'inactive']),
-        ]);
+        ];
+
+        $client->set($updatedFields);
+        $client->save();
 
         $table = Lazer::table('users')->findAll();
 
@@ -50,10 +58,12 @@ class UpdateCommand extends Command
 
         return Command::SUCCESS;
     }
+
     public function tableExists(string $tableName): bool
     {
         return Config::table($tableName)->exists() && Data::table($tableName)->exists();
     }
+
     public function createUsersTable()
     {
         Lazer::create('users', [
@@ -62,21 +72,4 @@ class UpdateCommand extends Command
             'status' => 'string',
         ]);
     }
-
-    private function updateNewUser(array $array)
-    {
-        $database = Lazer::table('users')->find('id');
-        $database->set($array);
-
-        $database->save();
-    }
 }
-
-    ///
-//$row = Lazer::table('users')->find(1);
-
-//$row->set(array(
-    //'nickname' => 'user',
-    //'email' => 'user@example.com'
-//));
-//$row->save();
