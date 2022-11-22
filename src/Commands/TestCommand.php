@@ -2,17 +2,18 @@
 
 namespace Manikienko\Todo\Commands;
 
+use Lazer\Classes\Database as Lazer;
 use Lazer\Classes\Helpers\Config;
 use Lazer\Classes\Helpers\Data;
+use Manikienko\Todo\Database\ClientDatabase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Lazer\Classes\Database as Lazer;
 
+/* надо переименовать в CreateCommand*/
 class TestCommand extends Command
 {
-    private SymfonyStyle $io;
 
     public function configure()
     {
@@ -23,40 +24,22 @@ class TestCommand extends Command
     
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->io = new SymfonyStyle($input, $output);
-        $this->io->text('Create new user');
+        $io = new SymfonyStyle($input, $output);
+        $io->text('Create new user');
 
-        if (!$this->tableExists('users')) {
-            $this->createUsersTable();
-        }
+        $clientsDB = new ClientDatabase();
 
-        
-        $this->createNewUser([
-            'name' => $this->io->ask("User name:"),
-            'age' => (int) $this->io->ask("User age:"),
-            'status' => $this->io->choice("User status:", ['active', 'inactive']),
-        ]);
-        //$this->io->horizontalTable(
-           // ['Name','Age','Status'],
-           // [
-           //     ['name' => $this->io->ask("User name:"),'age' => (int) $this->io->ask("User age:"),'status' => $this->io->choice("User status:", ['active', 'inactive'])],
-           // ]
-        //);
+        $userData = [
+            'name' => $io->ask("User name:"),
+            'age' => (int)$io->ask("User age:"),
+            'status' => $io->choice("User status:", ['active', 'inactive']),
+        ];
 
-        // тут мы просим подгрузить данные в память для того, чтобы потом их итерировать.
-        // Обычно вызывая подобные методы мы получаем набор сущностей, коллекцию, но не тут.
-        // Тут он подгружает данные внутрь класса таблицы (\Lazer\Classes\Database) и позволяет проитерировать их.
-        $table = Lazer::table('users')->findAll();
+        $clientsDB->set($userData);
+        $clientsDB->insert();
 
-        # важный момент, пакет исплользует stdClass под капотом, так что данные надо вначале превартить в массив,
-        # чтобы легче было работать. К примеру так: (array) $row
-        $rows = [];
-        foreach ($table as $row) {
-            $rows[] = (array) $row;
-        }
 
-        // а теперь немного магии symfony
-        $this->io->table($table->fields(), $rows);
+        $io->table($clientsDB->fields(), $clientsDB->findAll(true));
 
         return Command::SUCCESS;
     }
