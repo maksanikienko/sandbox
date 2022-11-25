@@ -2,22 +2,21 @@
 
 namespace Manikienko\Todo\Database;
 
-class ExerciseDatabase extends NamedDatabase{
-    
+class ExerciseDatabase extends NamedDatabase {
+
     public function getTableName():  string
     {
-        return 'Exercises';
+        return 'exercises';
     }
 
-    protected function createSchema(): void
+    public function defineSchema(): array
     {
-        self::create('Exercises', [
+        return [
             'name' => 'string',
-            'difficultyScale' => 'integer',
+            'difficulty_scale' => 'integer',
             'type' => 'string', //base,isolation
-            'level'=> 'string', 
-            'weightType' => 'string',
-        ]);
-
+            'level' => 'string',
+            'weight_type' => 'string',
+        ];
     }
 }

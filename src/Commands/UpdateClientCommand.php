@@ -15,7 +15,7 @@ class UpdateClientCommand extends Command
     public function configure()
     {
         parent::configure();
-        $this->setName('');
+        $this->setName('client:update');
 
         $this->addArgument('id', InputArgument::REQUIRED);
     }

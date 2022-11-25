@@ -9,13 +9,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class UpdateClientCommand extends Command
+class UpdateExerciseCommand extends Command
 {
 
     public function configure()
     {
         parent::configure();
-        $this->setName('update');
+        $this->setName('exercise:update');
 
         $this->addArgument('id', InputArgument::REQUIRED);
     }
@@ -33,6 +33,7 @@ class UpdateClientCommand extends Command
         $exercise = $exerciseDB->find($id);
 
         $updatedFields = [
+            /* fixme укажи только те поля которые ты хочешь обновить */
             'name' => $io->ask("User new name:"),
             'age' => (int)$io->ask("User new age:"),
             'status' => $io->choice("User new status:", ['active', 'inactive']),

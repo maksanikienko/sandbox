@@ -31,8 +31,19 @@ abstract class NamedDatabase extends Database
 
     abstract public function getTableName(): string;
 
-    abstract protected function createSchema(): void;
+    abstract public function defineSchema(): array;
 
+    protected function createSchema(): void
+    {
+        $fields = $this->defineSchema();
+        if (empty($fields)) {
+            throw new \RuntimeException(
+                "Schema for table '" . $this->getTableName() . "' is empty." .
+                "Please define it in " . static::class . "::defineSchema() method."
+            );
+        }
+        self::create($this->getTableName(), $fields);
+    }
 
     public function databaseExists(): bool
     {

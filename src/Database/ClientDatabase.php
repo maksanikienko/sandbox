@@ -9,14 +9,12 @@ class ClientDatabase extends NamedDatabase
         return 'clients';
     }
 
-    protected function createSchema(): void
+    public function defineSchema(): array
     {
-        self::create('clients', [
+        return [
             'name' => 'string',
             'age' => 'integer',
             'status' => 'string',
-        ]);
-
+        ];
     }
-
 }
