@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Database;
 
-class ExerciseDatabase extends NamedDatabase {
+class ExerciseTable extends AbstractTable {
 
     public function getTableName():  string
     {

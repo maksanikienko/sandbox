@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Manikienko\Todo\Database\ExerciseDatabase;
+use Manikienko\Todo\Database\ExerciseTable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,7 +28,7 @@ class UpdateExerciseCommand extends Command
 
         $id = (int) $input->getArgument('id');
 
-        $exerciseDB = new ExerciseDatabase();
+        $exerciseDB = new ExerciseTable();
 
         $exercise = $exerciseDB->find($id);
 

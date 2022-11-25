@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Database;
 
-class ClientDatabase extends NamedDatabase
+class ClientTable extends AbstractTable
 {
     public function getTableName():  string
     {

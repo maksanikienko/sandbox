@@ -6,7 +6,7 @@ namespace Manikienko\Todo\Commands;
 use Lazer\Classes\Database as Lazer;
 use Lazer\Classes\Helpers\Config;
 use Lazer\Classes\Helpers\Data;
-use Manikienko\Todo\Database\ExerciseDatabase;
+use Manikienko\Todo\Database\ExerciseTable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,7 +27,7 @@ class CreateExerciseCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Create new exercise');
 
-        $exerciseDB = new ExerciseDatabase();
+        $exerciseDB = new ExerciseTable();
 
         $userData = [
             'name' => $io->ask("Exercise name:"),

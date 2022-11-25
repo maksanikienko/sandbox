@@ -11,7 +11,7 @@ use Lazer\Classes\Helpers\Data;
  * ты должен имплементировать в дочерних классах
  */
 
-abstract class NamedDatabase extends Database
+abstract class AbstractTable extends Database
 {
     /*final запрещает переписывание метода в дочернем классе, тут это сделало чтобы никто не мог просто так поменять
      *  поведение конструктора в дочерних классах.
@@ -19,7 +19,7 @@ abstract class NamedDatabase extends Database
     final public function __construct()
     {
         // эта часть была добавлена
-        if (!$this->databaseExists()) {
+        if (!$this->tableExists()) {
             $this->createSchema();
         }
 
@@ -45,7 +45,7 @@ abstract class NamedDatabase extends Database
         self::create($this->getTableName(), $fields);
     }
 
-    public function databaseExists(): bool
+    public function tableExists(): bool
     {
         return Config::table($this->getTableName())->exists() && Data::table($this->getTableName())->exists();
     }
