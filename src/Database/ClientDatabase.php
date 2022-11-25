@@ -4,7 +4,7 @@ namespace Manikienko\Todo\Database;
 
 class ClientDatabase extends NamedDatabase
 {
-    public function getTableName(): string
+    public function getTableName():  string
     {
         return 'clients';
     }

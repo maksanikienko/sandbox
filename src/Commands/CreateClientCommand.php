@@ -12,13 +12,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /* надо переименовать в CreateCommand*/
-class TestCommand extends Command
+class CreateClientCommand extends Command
 {
 
     public function configure()
-    {
+    { 
         parent::configure();
-        $this->setName('create');
+        $this->setName('client');
 
     }
     

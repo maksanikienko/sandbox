@@ -2,14 +2,14 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Manikienko\Todo\Database\ClientDatabase;
+use Manikienko\Todo\Database\ExerciseDatabase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class UpdateCommand extends Command
+class UpdateClientCommand extends Command
 {
 
     public function configure()
@@ -24,13 +24,13 @@ class UpdateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->text('Update user by ID');
+        $io->text('Update exercise by ID');
 
         $id = (int) $input->getArgument('id');
 
-        $clientsDB = new ClientDatabase();
+        $exerciseDB = new ExerciseDatabase();
 
-        $client = $clientsDB->find($id);
+        $exercise = $exerciseDB->find($id);
 
         $updatedFields = [
             'name' => $io->ask("User new name:"),
@@ -38,10 +38,10 @@ class UpdateCommand extends Command
             'status' => $io->choice("User new status:", ['active', 'inactive']),
         ];
 
-        $client->set($updatedFields);
-        $client->save();
+        $exercise->set($updatedFields);
+        $exercise->save();
 
-        $io->table($clientsDB->fields(), $clientsDB->findAll(true));
+        $io->table($exerciseDB->fields(), $exerciseDB->findAll(true));
 
         return Command::SUCCESS;
     }
