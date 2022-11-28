@@ -6,20 +6,19 @@ namespace Manikienko\Todo\Commands;
 use Lazer\Classes\Database as Lazer;
 use Lazer\Classes\Helpers\Config;
 use Lazer\Classes\Helpers\Data;
-use Manikienko\Todo\Database\ExerciseDatabase;
+use Manikienko\Todo\Database\ExerciseTable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-/* надо переименовать в CreateCommand*/
 class CreateExerciseCommand extends Command
 {
 
     public function configure()
     {
         parent::configure();
-        $this->setName('exercise');
+        $this->setName('exercise:create');
 
     }
     
@@ -28,14 +27,14 @@ class CreateExerciseCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Create new exercise');
 
-        $exerciseDB = new ExerciseDatabase();
+        $exerciseDB = new ExerciseTable();
 
         $userData = [
             'name' => $io->ask("Exercise name:"),
-            'difficultyScale' => $io->ask("Exercise rating:"),
+            'difficulty_scale' => (int)$io->ask("Exercise rating:"),
             'type' => $io->choice("Exercise type:", ['Base', 'Isolate']),
             'level' => $io->choice("Exercise level:", ['Easy', 'Normal', 'Hard']),
-            'weightType' => $io->choice("Exercise Weight:", ['Barbell', 'Dumbell', 'Machine']),
+            'weight_type' => $io->choice("Exercise Weight:", ['Barbell', 'Dumbell', 'Machine']),
         ];
 
         $exerciseDB->set($userData);
@@ -45,29 +44,5 @@ class CreateExerciseCommand extends Command
         $io->table($exerciseDB->fields(), $exerciseDB->findAll(true));
 
         return Command::SUCCESS;
-    }
-
-    public function tableExists(string $tableName): bool
-    {
-
-        return Config::table($tableName)->exists() && Data::table($tableName)->exists();
-    }
-    public function createExerciseTable()
-    {
-        Lazer::create('Exercise', [
-            'name' => 'string',
-            'difficultyScale' => 'integer',
-            'type' => 'string',
-            'level' => 'string',
-            'weightType' => 'string',
-        ]);
-    }
-
-    private function createNewExercise(array $array)
-    {
-
-        $database = Lazer::table('Exercise');
-        $database->set($array);
-        $database->insert();
     }
 }

@@ -2,21 +2,19 @@
 
 namespace Manikienko\Todo\Database;
 
-class ClientDatabase extends NamedDatabase
+class ClientTable extends AbstractTable
 {
     public function getTableName():  string
     {
         return 'clients';
     }
 
-    protected function createSchema(): void
+    public function defineSchema(): array
     {
-        self::create('clients', [
+        return [
             'name' => 'string',
             'age' => 'integer',
             'status' => 'string',
-        ]);
-
+        ];
     }
-
 }

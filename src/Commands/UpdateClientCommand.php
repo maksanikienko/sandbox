@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Manikienko\Todo\Database\ClientDatabase;
+use Manikienko\Todo\Database\ClientTable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,7 +15,7 @@ class UpdateClientCommand extends Command
     public function configure()
     {
         parent::configure();
-        $this->setName('');
+        $this->setName('client:update');
 
         $this->addArgument('id', InputArgument::REQUIRED);
     }
@@ -28,7 +28,7 @@ class UpdateClientCommand extends Command
 
         $id = (int) $input->getArgument('id');
 
-        $clientsDB = new ClientDatabase();
+        $clientsDB = new ClientTable();
 
         $client = $clientsDB->find($id);
 
