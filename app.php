@@ -1,6 +1,10 @@
 #!/usr/bin/env php
 <?php
 require __DIR__.'/vendor/autoload.php';
+use Manikienko\Todo\Commands\CreateWorkoutCommand;
+use Manikienko\Todo\Commands\ReadExerciseCommand;
+use Manikienko\Todo\Commands\DeleteExerciseCommand;
+use Manikienko\Todo\Commands\UpdateExerciseCommand;
 use Manikienko\Todo\Commands\CreateExerciseCommand;
 use Manikienko\Todo\Commands\CreateClientCommand;
 use Manikienko\Todo\Commands\UpdateClientCommand;
@@ -10,6 +14,10 @@ define('LAZER_DATA_PATH', realpath(__DIR__).'/data/');
 
 $application = new Application();
 // тут с помощью $application->add(...) ты будешь добавлять новые команды
+$application->add(new CreateWorkoutCommand());
+$application->add(new ReadExerciseCommand());
+$application->add(new DeleteExerciseCommand());
+$application->add(new UpdateExerciseCommand());
 $application->add(new CreateExerciseCommand());
 $application->add(new CreateClientCommand());
 $application->add(new UpdateClientCommand());

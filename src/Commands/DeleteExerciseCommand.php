@@ -9,13 +9,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class UpdateExerciseCommand extends Command
+class DeleteExerciseCommand extends Command
 {
 
     public function configure()
     {
         parent::configure();
-        $this->setName('exercise:update');
+        $this->setName('exercise:delete');
 
         $this->addArgument('id', InputArgument::REQUIRED);
     }
@@ -24,7 +24,7 @@ class UpdateExerciseCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->text('Update exercise by ID');
+        $io->text('Delete exercise by ID');
 
         $id = (int) $input->getArgument('id');
 
@@ -32,17 +32,7 @@ class UpdateExerciseCommand extends Command
 
         $exercise = $exerciseDB->find($id);
 
-        $updatedFields = [
-            /* fixme укажи только те поля которые ты хочешь обновить */
-            'name' => $io->ask("Exercise name:"),
-            'difficulty_scale' => (int)$io->ask("Exercise rating:"),
-            'type' => $io->choice("Exercise type:", ['Base', 'Isolate']),
-            'level' => $io->choice("Exercise level:", ['Easy', 'Normal', 'Hard']),
-            'weight_type' => $io->choice("Exercise Weight:", ['Barbell', 'Dumbell', 'Machine']),
-        ];
-
-        $exercise->set($updatedFields);
-        $exercise->save();
+        $exercise->delete($id);
 
         $io->table($exerciseDB->fields(), $exerciseDB->findAll(true));
 
