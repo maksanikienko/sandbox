@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Manikienko\Todo\Database\ClientTable;
+use Manikienko\Todo\Model\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,9 +26,9 @@ class UpdateClientCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Update user by ID');
 
-        $id = (int) $input->getArgument('id');
+        $id = (int)$input->getArgument('id');
 
-        $clientsDB = new ClientTable();
+        $clientsDB = new Client();
 
         $client = $clientsDB->find($id);
 
@@ -41,7 +41,7 @@ class UpdateClientCommand extends Command
         $client->set($updatedFields);
         $client->save();
 
-        $io->table($clientsDB->fields(), $clientsDB->findAll(true));
+        $io->table($clientsDB->fields(), [$client->asArray()]);
 
         return Command::SUCCESS;
     }

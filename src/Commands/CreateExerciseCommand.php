@@ -3,10 +3,7 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Lazer\Classes\Database as Lazer;
-use Lazer\Classes\Helpers\Config;
-use Lazer\Classes\Helpers\Data;
-use Manikienko\Todo\Database\ExerciseTable;
+use Manikienko\Todo\Model\Exercise;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,13 +18,13 @@ class CreateExerciseCommand extends Command
         $this->setName('exercise:create');
 
     }
-    
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->text('Create new exercise');
 
-        $exerciseDB = new ExerciseTable();
+        $exerciseDB = new Exercise();
 
         $userData = [
             'name' => $io->ask("Exercise name:"),

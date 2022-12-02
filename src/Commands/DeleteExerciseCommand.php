@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Manikienko\Todo\Database\ExerciseTable;
+use Manikienko\Todo\Model\Exercise;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,13 +28,13 @@ class DeleteExerciseCommand extends Command
 
         $id = (int) $input->getArgument('id');
 
-        $exerciseDB = new ExerciseTable();
+        $exerciseDB = new Exercise();
 
         $exercise = $exerciseDB->find($id);
 
         $exercise->delete($id);
 
-        $io->table($exerciseDB->fields(), $exerciseDB->findAll(true));
+        $io->table($exerciseDB->fields(), [$exercise->asArray()]);
 
         return Command::SUCCESS;
     }
