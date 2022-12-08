@@ -4,8 +4,8 @@ namespace Manikienko\Todo\Commands\Database;
 
 use Lazer\Classes\Database;
 use Manikienko\Todo\Database\AbstractMigration;
+use Manikienko\Todo\Database\Model\Migration;
 use Manikienko\Todo\Database\Schema;
-use Manikienko\Todo\Model\Migration;
 use ReflectionClass;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

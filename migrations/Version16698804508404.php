@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Database;
 
-use Manikienko\Todo\Model\Migration;
+use Manikienko\Todo\Database\Model\Migration;
 
 class Version16698804508404 extends AbstractMigration
 {

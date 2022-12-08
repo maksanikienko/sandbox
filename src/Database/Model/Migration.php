@@ -1,6 +1,6 @@
 <?php
 
-namespace Manikienko\Todo\Model;
+namespace Manikienko\Todo\Database\Model;
 
 use Manikienko\Todo\Database\Model;
 

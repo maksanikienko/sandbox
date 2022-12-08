@@ -4,6 +4,7 @@ namespace Manikienko\Todo\Model;
 
 use Manikienko\Todo\Database\Model;
 
+
 class Workout extends Model
 {
 
@@ -15,8 +16,8 @@ class Workout extends Model
             'rest_time' => 'integer',
             'place' => 'string', //gym,stadium,home
             'method' => 'string', //interval,variable,circular
-            'client_id' => 'string'
-
+//            'client_id' => 'string',
+//             'gym_id' => 'int'
         ];
     }
 }
