@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Manikienko\Todo\Database\ClientTable;
+use Manikienko\Todo\Model\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,19 +22,14 @@ class CreateClientCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Create new user');
 
-        $clientsDB = new ClientTable();
+        $client = new Client();
 
-        $userData = [
-            'name' => $io->ask("User name:"),
-            'age' => (int)$io->ask("User age:"),
-            'status' => $io->choice("User status:", ['active', 'inactive']),
-        ];
+        $client->name = $io->ask("User name:");
+        $client->age = (int)$io->ask("User age:");
+        $client->status = $io->choice("User status:", ['active', 'inactive']);
+        $client->save();
 
-        $clientsDB->set($userData);
-        $clientsDB->insert();
-
-
-        $io->table($clientsDB->fields(), $clientsDB->findAll(true));
+        $io->table($client->fields(), [$client->asArray()]);
 
         return Command::SUCCESS;
     }

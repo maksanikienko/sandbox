@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Manikienko\Todo\Database\ExerciseTable;
+use Manikienko\Todo\Model\Exercise;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,12 +28,8 @@ class ReadExerciseCommand extends Command
 
         $id = (int) $input->getArgument('id');
 
-        $exerciseDB = new ExerciseTable();
-
-        $exercise=$exerciseDB->where('id', '=', $id);
-        $exercise->save();
-    
-        $io->horizontalTable($exerciseDB->fields(), $exerciseDB->findAll(true));
+        $query = Exercise::query();
+        $io->horizontalTable($query->fields(), [$query->find($id)]);
 
         return Command::SUCCESS;
     }

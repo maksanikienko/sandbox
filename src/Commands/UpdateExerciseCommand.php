@@ -2,7 +2,7 @@
 
 namespace Manikienko\Todo\Commands;
 
-use Manikienko\Todo\Database\ExerciseTable;
+use Manikienko\Todo\Model\Exercise;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,14 +26,13 @@ class UpdateExerciseCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Update exercise by ID');
 
-        $id = (int) $input->getArgument('id');
+        $id = (int)$input->getArgument('id');
 
-        $exerciseDB = new ExerciseTable();
+        $exerciseDB = new Exercise();
 
         $exercise = $exerciseDB->find($id);
 
         $updatedFields = [
-            /* fixme укажи только те поля которые ты хочешь обновить */
             'name' => $io->ask("Exercise name:"),
             'difficulty_scale' => (int)$io->ask("Exercise rating:"),
             'type' => $io->choice("Exercise type:", ['Base', 'Isolate']),
