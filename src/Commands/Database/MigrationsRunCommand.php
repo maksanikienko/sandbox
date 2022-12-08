@@ -91,7 +91,7 @@ class MigrationsRunCommand extends Command
         return (new Finder())
             ->in(__DIR__ . '/../../../migrations')
             ->name('Version*.php')
-            ->sortByCaseInsensitiveName()
+            ->sortByName()
             ->getIterator();
     }
 

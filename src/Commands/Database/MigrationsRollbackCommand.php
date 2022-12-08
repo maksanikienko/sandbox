@@ -23,6 +23,7 @@ class MigrationsRollbackCommand extends Command
 
     public function getMigrationClassName(object $migration): string
     {
+        // ex: \Manikienko\Todo\Database\Version16704974761789
         $baseMigration = new ReflectionClass(AbstractMigration::class);
         return $baseMigration->getNamespaceName() . "\\Version" . $migration->version;
     }
@@ -47,8 +48,8 @@ class MigrationsRollbackCommand extends Command
         foreach ($migrationBatch as $migration) {
             $migrationClassName = $this->getMigrationClassName($migration);
 
-            $migrationClassName = new $migrationClassName();
-            $migrationClassName->down(new Schema());
+            $migrationClass = new $migrationClassName();
+            $migrationClass->down(new Schema());
 
             $io->writeln(
                 "<info>[DONE]</info> " .
