@@ -39,9 +39,9 @@ final class Schema
         return $this;
     }
 
-    public function removeField(string $field, string $type): self
+    public function removeField(string $field): self
     {
-        $this->database->addFields([$field => $type]);
+        $this->database->deleteFields([$field]);
 
         return $this;
     }

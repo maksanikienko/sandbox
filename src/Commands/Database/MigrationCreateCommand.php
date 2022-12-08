@@ -3,6 +3,7 @@
 namespace Manikienko\Todo\Commands\Database;
 
 use Manikienko\Todo\Database\AbstractMigration;
+use ReflectionClass;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -54,7 +55,7 @@ class MigrationCreateCommand extends Command
 
     public function prepareClassSignature(string $migrationsClassName): string
     {
-        $reflectionClass = new \ReflectionClass(AbstractMigration::class);
+        $reflectionClass = new ReflectionClass(AbstractMigration::class);
         $baseMigrationPath = ($reflectionClass)->getFileName();
         $migrationContent = file_get_contents($baseMigrationPath);
 
