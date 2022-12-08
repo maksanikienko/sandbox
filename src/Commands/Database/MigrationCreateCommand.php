@@ -42,7 +42,15 @@ class MigrationCreateCommand extends Command
      */
     public function generateMigrationName(): string|array
     {
-        return str_replace(".", "", "Version" . str_pad((string)microtime(true), 15, '0', STR_PAD_RIGHT));
+        //ex: 1670498833.2588
+        $timestamp = (string)microtime(true);
+
+        // Version16704988332588
+        $version = str_replace(".", "", "Version" . $timestamp);
+
+        $className = str_pad($version, 15, '0', STR_PAD_RIGHT);
+
+        return $className;
     }
 
     /**
