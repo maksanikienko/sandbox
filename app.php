@@ -3,6 +3,8 @@
 require __DIR__.'/vendor/autoload.php';
 
 use Manikienko\Todo\Commands\CreateWorkoutCommand;
+use Manikienko\Todo\Commands\CreateGymCommand;
+use Manikienko\Todo\Commands\CreateTrainerCommand;
 use Manikienko\Todo\Commands\Database\MigrationCreateCommand;
 use Manikienko\Todo\Commands\Database\MigrationsRollbackCommand;
 use Manikienko\Todo\Commands\Database\MigrationsRunCommand;
@@ -20,6 +22,8 @@ define('LAZER_DATA_PATH', realpath(__DIR__).'/data/');
 $application = new Application();
 // тут с помощью $application->add(...) ты будешь добавлять новые команды
 $application->add(new CreateWorkoutCommand());
+$application->add(new CreateGymCommand());
+$application->add(new CreateTrainerCommand());
 $application->add(new ReadExerciseCommand());
 $application->add(new DeleteExerciseCommand());
 $application->add(new UpdateExerciseCommand());

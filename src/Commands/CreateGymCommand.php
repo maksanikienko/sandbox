@@ -1,20 +1,17 @@
 <?php
 
-namespace Manikienko\Todo\Model;
 
-use Manikienko\Todo\Database\Model;
+namespace Manikienko\Todo\Commands;
+
+use Manikienko\Todo\Model\Gym;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-/**
- * @property int id
- * @property int name
- * @property int address
- **/
-class Gym extends Model
+class CreateGymCommand extends Command
 {
+
     public function configure()
     {
         parent::configure();
@@ -45,5 +42,4 @@ class Gym extends Model
 
         return Command::SUCCESS;
     }
-
 }
