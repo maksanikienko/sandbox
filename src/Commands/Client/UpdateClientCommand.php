@@ -1,6 +1,6 @@
 <?php
 
-namespace Manikienko\Todo\Commands;
+namespace Manikienko\Todo\Commands\Client;
 
 use Manikienko\Todo\Model\Client;
 use Symfony\Component\Console\Command\Command;
@@ -28,9 +28,9 @@ class UpdateClientCommand extends Command
 
         $id = (int)$input->getArgument('id');
 
-        $clientsDB = new Client();
+        $client = new Client();
 
-        $client = $clientsDB->find($id);
+        $content = $client->find($id);
 
         $updatedFields = [
             'name' => $io->ask("User new name:"),
@@ -38,10 +38,10 @@ class UpdateClientCommand extends Command
             'status' => $io->choice("User new status:", ['active', 'inactive']),
         ];
 
-        $client->set($updatedFields);
-        $client->save();
+        $content->set($updatedFields);
+        $content->save();
 
-        $io->table($clientsDB->fields(), [$client->asArray()]);
+        $io->table($client->fields(), [$content->asArray()]);
 
         return Command::SUCCESS;
     }

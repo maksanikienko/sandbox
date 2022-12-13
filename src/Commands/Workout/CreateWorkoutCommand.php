@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Manikienko\Todo\Commands;
+namespace Manikienko\Todo\Commands\Workout;
 
 use Manikienko\Todo\Model\Workout;
 use Symfony\Component\Console\Command\Command;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Manikienko\Todo\Commands;
+namespace Manikienko\Todo\Commands\Exercise;
 
 use Manikienko\Todo\Model\Exercise;
 use Symfony\Component\Console\Command\Command;
