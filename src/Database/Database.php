@@ -60,4 +60,13 @@ abstract class Database extends BaseDatabase
         return parent::findAll();
     }
 
+    public function asArray(string $key = null, string $value = null, string $v2 = null)
+    {
+        if (empty($this->data) && !empty($this->set)) {
+            return (array) $this->set;
+        }
+
+        return parent::asArray($key, $value, $v2);
+    }
+
 }
