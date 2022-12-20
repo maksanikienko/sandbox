@@ -29,7 +29,8 @@ class ReadClientCommand extends Command
         $id = (int) $input->getArgument('id');
 
         $query = Client::query();
-        $io->horizontalTable($query->fields(), [$query->find($id)]);
+        
+        $io->horizontalTable($query->fields(), [$query->find($id)->asArray()]);
 
         return Command::SUCCESS;
     }

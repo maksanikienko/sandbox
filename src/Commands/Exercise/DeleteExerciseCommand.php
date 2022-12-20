@@ -24,17 +24,23 @@ class DeleteExerciseCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->text('Delete exercise by ID');
+
+        $confirm = $io->confirm('Do you want to delete a exercise?');
+        if ($confirm == false) die();
 
         $id = (int) $input->getArgument('id');
 
-        $exerciseDB = new Exercise();
+        $exercise = new Exercise();
 
-        $exercise = $exerciseDB->find($id);
+        $content = $exercise->find($id);
 
-        $exercise->delete($id);
+        $io->table($exercise->fields(), [$content->asArray()]);
 
-        $io->table($exerciseDB->fields(), [$exercise->asArray()]);
+        $io->success('Exercise with id '.$id.' was deleted');
+
+        $content->delete($id);
+
+        
 
         return Command::SUCCESS;
     }

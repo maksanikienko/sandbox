@@ -1,21 +1,21 @@
 <?php
 
-namespace Manikienko\Todo\Commands\Client;
+namespace Manikienko\Todo\Commands\Trainer;
 
-use Manikienko\Todo\Model\Client;
+use Manikienko\Todo\Model\Trainer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class UpdateClientCommand extends Command
+class UpdateTrainerCommand extends Command
 {
 
     public function configure()
     {
         parent::configure();
-        $this->setName('client:update');
+        $this->setName('trainer:update');
 
         $this->addArgument('id', InputArgument::REQUIRED);
     }
@@ -24,18 +24,20 @@ class UpdateClientCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->text('Update user by ID');
+        $io->text('Update Trainer by ID');
 
         $id = (int)$input->getArgument('id');
 
-        $client = new Client();
+        $trainer = new Trainer();
 
-        $content = $client->find($id);
+        $content = $trainer->find($id);
 
         $updatedFields = [
-            'name' => $io->ask("User new name:"),
-            'age' => (int)$io->ask("User new age:"),
-            'status' => $io->choice("User new status:", ['active', 'inactive']),
+            'full_name' => $io->ask("Trainer name:"),
+            'age' => (int)$io->ask("Age:"),
+            'salary' =>  (int)$io->ask("Salary:",'$'),
+            'family_status' => $io->choice("Status:",['Married','Single']),
+            'email' => $io->ask("Email:"),
         ];
 
         $content->set($updatedFields);
@@ -43,7 +45,7 @@ class UpdateClientCommand extends Command
 
         $io->table($content->fields(), [$content->find($id)->asArray()]);
 
-        $io->success('Client with id '.$id.' was updated');
+        $io->success('Trainer with id '.$id.' was updated');
      
 
         return Command::SUCCESS;

@@ -24,7 +24,7 @@ class CreateExerciseCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->text('Create new exercise');
 
-        $exerciseDB = new Exercise();
+        $exercise = new Exercise();
 
         $userData = [
             'name' => $io->ask("Exercise name:"),
@@ -34,11 +34,13 @@ class CreateExerciseCommand extends Command
             'weight_type' => $io->choice("Exercise Weight:", ['Barbell', 'Dumbell', 'Machine']),
         ];
 
-        $exerciseDB->set($userData);
-        $exerciseDB->insert();
+        $exercise->set($userData);
+        $exercise->insert();
 
 
-        $io->table($exerciseDB->fields(), $exerciseDB->findAll(true));
+        $io->table($exercise->fields(), $exercise->findAll(true));
+
+        $io->success('New exercise was created');
 
         return Command::SUCCESS;
     }

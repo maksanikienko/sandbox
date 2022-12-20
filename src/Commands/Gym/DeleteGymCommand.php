@@ -1,21 +1,21 @@
 <?php
 
-namespace Manikienko\Todo\Commands\Exercise;
+namespace Manikienko\Todo\Commands\Gym;
 
-use Manikienko\Todo\Model\Exercise;
+use Manikienko\Todo\Model\Gym;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ReadExerciseCommand extends Command
+class DeleteGymCommand extends Command
 {
 
     public function configure()
     {
         parent::configure();
-        $this->setName('exercise:read');
+        $this->setName('gym:delete');
 
         $this->addArgument('id', InputArgument::REQUIRED);
     }
@@ -24,12 +24,21 @@ class ReadExerciseCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->text('Read exercise by ID');
 
+        $confirm = $io->confirm('Do you want to delete a gym?');
+        if ($confirm == false) die();
+        
         $id = (int) $input->getArgument('id');
 
-        $query = Exercise::query();
-        $io->horizontalTable($query->fields(), [$query->find($id)->asArray()]);
+        $gym = new Gym();
+
+        $content = $gym->find($id);
+        
+        $io->table($gym->fields(), [$gym->asArray()]);
+
+        $io->success('Gym with id '.$id.' was deleted');
+
+        $content ->delete($id);
 
         return Command::SUCCESS;
     }

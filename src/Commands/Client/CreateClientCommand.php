@@ -36,6 +36,8 @@ class CreateClientCommand extends Command
 
         $io->table($client->fields(), [$client->asArray()]);
 
+        $io->success('New user was created');
+
         return Command::SUCCESS;
     }
 }

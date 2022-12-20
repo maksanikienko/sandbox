@@ -24,17 +24,21 @@ class DeleteClientCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->text('Delete client by ID');
 
+        $confirm = $io->confirm('Do you want to delete a client?');
+        if ($confirm == false) die();
+        
         $id = (int) $input->getArgument('id');
 
         $client = new Client();
 
         $content = $client->find($id);
+        
+        $io->table($client->fields(), [$content->asArray()]);
+
+        $io->success('Client with id '.$id.' was deleted');
 
         $content ->delete($id);
-
-        $io->table($client->fields(), [$content->asArray()]);
 
         return Command::SUCCESS;
     }

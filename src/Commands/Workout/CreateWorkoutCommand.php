@@ -3,6 +3,7 @@
 
 namespace Manikienko\Todo\Commands\Workout;
 
+use Manikienko\Todo\Model\Client;
 use Manikienko\Todo\Model\Workout;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,8 +24,12 @@ class CreateWorkoutCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $io->text('Create new workout');
-        $workoutDB = new Workout();
 
+        $nameToSearch = $io->ask('Specify client name:');
+            
+        $client = Client::query()->where('name', '=' , $nameToSearch) -> first();
+
+        $workoutDB = new Workout();
 
         $workoutData = [
             'type' => $io->choice("Workout type:", ['Individual', 'Group']),
@@ -32,7 +37,7 @@ class CreateWorkoutCommand extends Command
             'rest_time' => (int)$io->ask("Rest time(sec):"),
             'place' => $io->choice("Workout place:", ['Gym', 'Stadium', 'Home']),
             'method' => $io->choice("Workout method:", ['Interval', 'Variable', 'Circular']),
-            'client_id' => (int)$io->choice('Choice client ID:', [1 => 'John', 2 => 'Travis', 3 => 'Sandy']),
+            'client_id' => $client,
         ];
 
         $workoutDB->set($workoutData);

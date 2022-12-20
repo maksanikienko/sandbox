@@ -4,10 +4,19 @@ require __DIR__.'/vendor/autoload.php';
 
 //Workout
 use Manikienko\Todo\Commands\Workout\CreateWorkoutCommand;
+use Manikienko\Todo\Commands\Workout\UpdateWorkoutCommand;
+use Manikienko\Todo\Commands\Workout\DeleteWorkoutCommand;
+use Manikienko\Todo\Commands\Workout\ReadWorkoutCommand;
 //Gym
 use Manikienko\Todo\Commands\Gym\CreateGymCommand;
+use Manikienko\Todo\Commands\Gym\UpdateGymCommand;
+use Manikienko\Todo\Commands\Gym\DeleteGymCommand;
+use Manikienko\Todo\Commands\Gym\ReadGymCommand;
 //Trainer
 use Manikienko\Todo\Commands\Trainer\CreateTrainerCommand;
+use Manikienko\Todo\Commands\Trainer\UpdateTrainerCommand;
+use Manikienko\Todo\Commands\Trainer\ReadTrainerCommand;
+use Manikienko\Todo\Commands\Trainer\DeleteTrainerCommand;
 //Migration
 use Manikienko\Todo\Commands\Database\MigrationCreateCommand;
 use Manikienko\Todo\Commands\Database\MigrationsRollbackCommand;
@@ -32,10 +41,19 @@ define('LAZER_DATA_PATH', realpath(__DIR__).'/data/');
 $application = new Application();
 //workout
 $application->add(new CreateWorkoutCommand());
+//$application->add(new UpdateWorkoutCommand());
+//$application->add(new DeleteWorkoutCommand());
+//$application->add(new ReadWorkoutCommand());
 //gym
 $application->add(new CreateGymCommand());
+$application->add(new UpdateGymCommand());
+$application->add(new DeleteGymCommand());
+$application->add(new ReadGymCommand());
 //trainer
 $application->add(new CreateTrainerCommand());
+$application->add(new UpdateTrainerCommand());
+$application->add(new DeleteTrainerCommand());
+$application->add(new ReadTrainerCommand());
 //exercise
 $application->add(new ReadExerciseCommand());
 $application->add(new DeleteExerciseCommand());

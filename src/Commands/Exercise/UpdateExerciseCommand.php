@@ -28,9 +28,9 @@ class UpdateExerciseCommand extends Command
 
         $id = (int)$input->getArgument('id');
 
-        $exerciseDB = new Exercise();
+        $exercise = new Exercise();
 
-        $exercise = $exerciseDB->find($id);
+        $content = $exercise->find($id);
 
         $updatedFields = [
             'name' => $io->ask("Exercise name:"),
@@ -40,10 +40,12 @@ class UpdateExerciseCommand extends Command
             'weight_type' => $io->choice("Exercise Weight:", ['Barbell', 'Dumbell', 'Machine']),
         ];
 
-        $exercise->set($updatedFields);
-        $exercise->save();
+        $content->set($updatedFields);
+        $content->save();
 
-        $io->table($exerciseDB->fields(), $exerciseDB->findAll(true));
+        $io->table($exercise->fields(), [$content->find($id)->asArray()]);
+
+        $io->success('Exercise with id '.$id.' was updated');
 
         return Command::SUCCESS;
     }
