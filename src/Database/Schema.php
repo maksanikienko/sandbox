@@ -46,7 +46,7 @@ final class Schema
         return $this;
     }
 
-    public function addRelation(): Relation
+    public function createRelation(): Relation
     {
         return Relation::table($this->database->name());
     }
