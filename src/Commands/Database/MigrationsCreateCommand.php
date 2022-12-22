@@ -9,13 +9,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class MigrationCreateCommand extends Command
+class MigrationsCreateCommand extends Command
 {
 
     public function configure()
     {
         parent::configure();
-        $this->setName('migration:create');
+        $this->setName('migrations:create');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

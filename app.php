@@ -18,7 +18,7 @@ use Manikienko\Todo\Commands\Trainer\UpdateTrainerCommand;
 use Manikienko\Todo\Commands\Trainer\ReadTrainerCommand;
 use Manikienko\Todo\Commands\Trainer\DeleteTrainerCommand;
 //Migration
-use Manikienko\Todo\Commands\Database\MigrationCreateCommand;
+use Manikienko\Todo\Commands\Database\MigrationsCreateCommand;
 use Manikienko\Todo\Commands\Database\MigrationsRollbackCommand;
 use Manikienko\Todo\Commands\Database\MigrationsRunCommand;
 //Exercise
@@ -66,7 +66,7 @@ $application->add(new ReadClientCommand());
 $application->add(new DeleteClientCommand());
 
 // database commands
-$application->add(new MigrationCreateCommand());
+$application->add(new MigrationsCreateCommand());
 $application->add(new MigrationsRunCommand());
 $application->add(new MigrationsRollbackCommand());
 

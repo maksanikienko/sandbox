@@ -51,7 +51,7 @@ abstract class Database extends BaseDatabase
         throw new \LogicException('You cannot this ' . static::class . '::' . __METHOD__ . ' method in this context.');
     }
 
-    public function findAll(bool $asArray = false): BaseDatabase|array
+    public function findAll(bool $asArray = false): BaseDatabase|self|array
     {
         if ($asArray) {
             return array_map(fn($row) => (array)$row, iterator_to_array(parent::findAll()));
@@ -60,7 +60,12 @@ abstract class Database extends BaseDatabase
         return parent::findAll();
     }
 
-    public function asArray(string $key = null, string $value = null, string $v2 = null)
+    public function pluck(string $column, string $key = null): array
+    {
+        return array_column($this->findAll(true), $column, $key);
+    }
+
+    public function asArray(string $key = null, string $value = null, string $v2 = null): array
     {
         if (empty($this->data) && !empty($this->set)) {
             return (array) $this->set;
@@ -68,5 +73,16 @@ abstract class Database extends BaseDatabase
 
         return parent::asArray($key, $value, $v2);
     }
+
+    public function setField(string $name, $value): BaseDatabase|self
+    {
+        /* надо было переписаать этот метод, видимо под капотом у проекта есть ошибки в работе со связями */
+        if (isset($this->relations()[strtolower($name)])){
+            /* allow relations */
+            return $this;
+        }
+        return parent::setField($name, $value);
+    }
+
 
 }
